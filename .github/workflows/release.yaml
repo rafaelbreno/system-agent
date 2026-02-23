@@ -31,13 +31,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Read Vault secrets
-        uses: rancher-eio/read-vault-secrets@main
-        with:
-          secrets: |
-            secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials username | DOCKER_USERNAME ;
-            secret/data/github/repo/${{ github.repository }}/dockerhub/rancher/credentials password | DOCKER_PASSWORD
-
       - name: Publish Image
         uses: rancher/ecm-distro-tools/actions/publish-image@master
         env:
@@ -51,9 +44,9 @@ jobs:
           tag: ${{ github.ref_name }}
           make-target: docker-buildx-push
 
-          public-repo: rancher
-          public-username: ${{ env.DOCKER_USERNAME }}
-          public-password: ${{ env.DOCKER_PASSWORD }}
+          public-repo: rafiusky
+          public-username: ${{ secrets.DOCKER_USERNAME }}
+          public-password: ${{ secrets.DOCKER_PASSWORD }}
 
           push-to-prime: false
 
@@ -70,9 +63,9 @@ jobs:
           tag: ${{ github.ref_name }}
           make-target: docker-buildx-push-suc
 
-          public-repo: rancher
-          public-username: ${{ env.DOCKER_USERNAME }}
-          public-password: ${{ env.DOCKER_PASSWORD }}
+          public-repo: rafiusky
+          public-username: ${{ secrets.DOCKER_USERNAME }}
+          public-password: ${{ secrets.DOCKER_PASSWORD }}
 
           push-to-prime: false
 
